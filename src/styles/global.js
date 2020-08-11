@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
   html, body, #root, #root > div {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100vw;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

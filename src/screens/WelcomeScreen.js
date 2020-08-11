@@ -7,7 +7,7 @@ import { Title, Description } from '../styles/components';
 const WelcomeScreen = ({ onStart }) => {
   return (
     <ContainerContent onClick={onStart} cta="J'ai faim !" tip="Appuyez sur Entrée ↵">
-      <Iframe src="https://www.youtube.com/embed/ThViR9uVVts" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="youpi" />
+      <Iframe src="https://www.youtube.com/embed/ThViR9uVVts" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="youpi" />
       <Title>Des viennoiseries faites maison !?</Title>
       <Description>
         Des pains au chocolat, j'en mange presque tous les jours, et c'est avec tristesse que j'ai appris en regardant cette vidéo que 80% des viennoiseries seraient d'origine industrielle.

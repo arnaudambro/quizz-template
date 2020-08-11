@@ -7,8 +7,7 @@ const completeAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 class QCM extends React.Component {
 
   state = {
-    selected: '',
-    selecteds: [''],
+    selected: [],
   }
 
   alphabet = completeAlphabet.substring(0, this.props.answers.length)
@@ -34,27 +33,30 @@ class QCM extends React.Component {
     window.removeEventListener('keydown', this.handleShortcuts);
   }
 
-  handleShortcuts = e => {
-    const key = e.key.toLowerCase();
-    if (this.alphabet.indexOf(key) !== -1) {
-      if (this.props.multipleSelect) {
-        // TODO
-      } else {
-        this.setState({ selected: key })
-      }
-    }
-  };
+  handleShortcuts = e => this.handleToggle(e.key.toLowerCase());
+  handleSelect = e => this.handleToggle(e.target.value);
 
-  handleSelect = e => {
-    this.setState({ selected: e.target.value })
+  handleToggle = key => {
+    if (this.alphabet.indexOf(key) !== -1) {
+      this.setState(({ selected }) => {
+        if (selected.includes(key)) {
+          return {
+            selected: selected.filter(k => k !== key)
+          }
+        }
+        return {
+          selected: this.props.multipleSelect ? [...selected,  key] : [key]
+        }
+      })
+    }
   }
 
 
   render() {
-    const { question, questionNumber, description, answers, onNext } = this.props;
+    const { question, questionNumber, description, answers } = this.props;
     const { selected } = this.state;
     return (
-      <ContainerContent onClick={onNext} cta="Suivant">
+      <ContainerContent>
         <Title>{questionNumber}. {question}</Title>
         {description && <Description>{description}</Description>}
         <AnswersContainer>
@@ -62,7 +64,7 @@ class QCM extends React.Component {
             const value = this.alphabet[index];
             return (
               <AnswerSubContainer onClick={this.handleSelect} key={answer} value={value}>
-                <AnswerContainer selected={selected === value}>
+                <AnswerContainer selected={selected.includes(value)}>
                   <AnswerKey>{value.toUpperCase()}</AnswerKey>
                   {answer}
                 </AnswerContainer>

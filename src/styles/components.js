@@ -32,6 +32,7 @@ export const AnswerSubContainer = styled.button`
   border: 1px solid ${color};
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px 0px;
   color: ${color};
+  flex-shrink: 0;
   margin-bottom: 20px;
   :hover {
     & > div {

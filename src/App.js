@@ -1,9 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import WelcomeScreen from './screens/WelcomeScreen';
 import GlobalStyle from './styles/global';
 import bg from './assets/pictures/viennoiseries.jpg'
 import QCM from './screens/QCM';
+import media from './styles/media';
 
 class App extends React.Component {
   state = {
@@ -12,6 +13,9 @@ class App extends React.Component {
 
   componentDidMount() {
     this.scrollToScreen(this.state.screen, 'auto');
+    let vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
   }
 
   componentDidUpdate(_, prevState) {
@@ -19,6 +23,11 @@ class App extends React.Component {
   }
 
   goToScreen1 = () => this.setState({ screen: 1 })
+  goToScreen2 = () => this.setState({ screen: 2 })
+  goToScreen3 = () => this.setState({ screen: 3 })
+
+  onPrev = () => this.setState(({ screen }) => ({ screen: screen - 1 }))
+  onNext = () => this.setState(({ screen }) => ({ screen: screen + 1 }))
 
   scrollToScreen = (screen, behavior = 'smooth') => {
     const screenHeight = window.innerHeight;
@@ -33,14 +42,43 @@ class App extends React.Component {
         <GlobalStyle />
         <Background />
         <Screener ref={r => this.screener = r}>
+          <WelcomeScreen onStart={this.goToScreen1} />
           <QCM
             visible={screen === 0}
             questionNumber="1"
-            question="Êtes-vous un boulanger/pâtissier ou un consommateur ?"
-            answers={["Un boulanger/pâtissier", "Un consommateur"]}
+            multipleSelect={false}
+            question={`Êtes-vous un boulanger/pâtissier ou un consommateur\u00A0?`}
+            answers={[
+              "Un boulanger/pâtissier",
+              "Un consommateur",
+            ]}
+            onPrev={() => console.log('youlou')}
+            onNext={() => console.log('youlou')}
           />
-          <WelcomeScreen onStart={this.goToScreen1} />
+          <QCM
+            visible={screen === 0}
+            questionNumber="2"
+            multipleSelect={true}
+            question={`Êtes-vous un boulanger/pâtissier ou un consommateur\u00A0?`}
+            answers={[
+              "Oui, ça ne serait que justice pour les boulangers/patissiers",
+              "Oui, ça motiverait les boulangers qui vendent des viennoiseries industrielles à les faire maison",
+              "Oui ! Et même 5€ j'irai quand même !",
+              "Non, je pense que c'est trop cher par rapport à ce que ça coûte, ça serait malhonnête",
+              "Non, je n'achèterais plus parce que c'est trop cher",
+              "Non ! Et vous pensez aux pauvres gens qui n'auraient pas les moyens ? Non mais alors !",
+              "Non, j'irais dans la boulangerie d'à côté",
+              "Autre",
+            ]}
+          />
         </Screener>
+        {screen > 0 && (
+          <CTAContainerPrevNext>
+            <Ad>Design inspiré par <a href="https://www.typeform.com">TypeForm</a></Ad>
+            <Prev type="button" onClick={this.onPrev}>↑</Prev>
+            <Next type="button" onClick={this.onNext}>↓</Next>
+          </CTAContainerPrevNext>
+        )}
       </>
     );
   }
@@ -72,7 +110,6 @@ const Background = styled.div`
 
 const Screener = styled.div`
   width: 100%;
-  border: 4px solid #000;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -81,6 +118,51 @@ const Screener = styled.div`
     flex-grow: 0;
     flex-basis: 100%;
   }
+`;
+
+const color = '#c87517';
+
+const ctaHeight = 100;
+const CTAContainerPrevNext = styled.div`
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  height: 30px !important;
+  width: auto !important;
+  display: flex;
+  flex-direction: space-between;
+`;
+
+const prevNextCss = css`
+  border: 1px solid #FFFFFF55;
+  padding: 0px 20px;
+  color: white;
+  flex-grow: 1;
+  font-weight: 700;
+  overflow: hidden;
+  background-color: ${color};
+`;
+
+const Prev = styled.button`
+  ${prevNextCss}
+  border-left: none;
+`;
+
+const Next = styled.button`
+  ${prevNextCss}
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left: none;
+`;
+
+const Ad = styled.span`
+  ${prevNextCss}
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 30px;
+  text-decoration: none;
 `;
 
 export default App;

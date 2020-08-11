@@ -1,27 +1,39 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import media from '../styles/media';
 
-const ContainerContent = ({ onClick, children, cta, tip, debug }) => {
+const ContainerContent = ({ onClick, onNext, onPrev, children, cta, tip, debug }) => {
+  if (!Boolean(cta)) {
+    return (
+      <Container debug={debug}>
+        <Content debug={debug}>
+          {children}
+        </Content>
+      </Container>
+    )
+  }
   return (
-    <Container debug={debug}>
-      <Content debug={debug}>
-        {children}
-        <CTAContainerDesktop>
-          <CTA type="button" onClick={onClick}>{cta}</CTA>
-          {tip && <Tip>{tip}</Tip>}
-        </CTAContainerDesktop>
-      </Content>
+    <>
+      <Container debug={debug}>
+        <Content debug={debug}>
+          {children}
+          <CTAContainerDesktop>
+            <CTA type="button" onClick={onClick}>{cta}</CTA>
+            {tip && <Tip>{tip}</Tip>}
+          </CTAContainerDesktop>
+        </Content>
+      </Container>
       <CTAContainerMobile>
         <CTA type="button" onClick={onClick}>{cta}</CTA>
         {tip && <Tip>{tip}</Tip>}
       </CTAContainerMobile>
-    </Container>
+    </>
   )
 }
 
+const color = '#c87517';
 const Container = styled.section`
-  height: 100%;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100%;
   ${props => props.debug && 'border: 4px solid red;'}
 `;
@@ -63,7 +75,7 @@ const CTAContainerMobile = styled.div`
 
 const CTA = styled.button`
   border-radius: 4px;
-  background-color: #c87517;
+  background-color: ${color};
   font-weight: bold;
   font-size: 1.5em;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px 0px;
@@ -73,7 +85,7 @@ const CTA = styled.button`
 `;
 
 const Tip = styled.span`
-  color: #c87517;
+  color: ${color};
   font-size: 0.75em;
   ${media('max').mobile`display: none;`}
 `;
