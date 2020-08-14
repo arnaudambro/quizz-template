@@ -1,0 +1,173 @@
+[
+  {
+    "number": 1,
+    "path": "A",
+    "multipleSelect": false,
+    "title": "Êtes-vous un boulanger/pâtissier ou un consommateur\u00A0?",
+    "answers": [
+      {
+        "key": "A",
+        "label": "Un boulanger/pâtissier",
+        "path": "AA"
+      },
+      {
+        "key": "B",
+        "label": "Un consommateur",
+        "path": "AB"
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "path": "AA",
+    "multipleSelect": false,
+    "title": "Vendez-vous des viennoiseries dans votre établissement ?",
+    "answers": [
+      {
+        "key": "A",
+        "label": "Oui",
+        "path": "AAA"
+      },
+      {
+        "key": "B",
+        "label": "Non",
+        "path": "AAB"
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "path": "AAB",
+    "multipleSelect": true,
+    "title": "Pourquoi ne vendez-vous pas de viennoiserie ?",
+    "answers": [
+      {
+        "key": "A",
+        "label": "Je ne sais pas les faire, mais si je savais j'en vendrais"
+      },
+      {
+        "key": "B",
+        "label": "Ça prend trop de temps par rapport à ce que ça rapporte"
+      },
+      {
+        "key": "C",
+        "label": "Je ne veux pas en vendre, c'est tout."
+      },
+      {
+        "key": "D",
+        "label": "Autre"
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "path": "AAA",
+    "multipleSelect": false,
+    "title": "Vos viennoiseries sont-elles faites maison ou industrielles ?",
+    "description": "Dans les deux choix, je vous demanderai pourquoi ensuite : vous avez sûrement de bonnes raisons !",
+    "answers": [
+      {
+        "key": "A",
+        "label": "Industrielles",
+        "path": "AAAA"
+      },
+      {
+        "key": "B",
+        "label": "Faites-maison",
+        "path": "AAAB"
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "path": "AAAA",
+    "multipleSelect": true,
+    "title": "Pourquoi vendez-vous des viennoiseries industrielles ?",
+    "answers": [
+      {
+        "key": "A",
+        "label": "Le fait maison prend trop de temps par rapport à ce que ça rapporte"
+      },
+      {
+        "key": "B",
+        "label": "Je ne prends pas de plaisir à produire des viennoiseries"
+      },
+      {
+        "key": "C",
+        "label": "Je ne vois pas la différence entre la faite maison et l'industrielle"
+      },
+      {
+        "key": "D",
+        "label": "Le client ne voit pas la différence entre la faite maison et l'industrielle"
+      },
+      {
+        "key": "E",
+        "label": "Autre"
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "path": "AAAB",
+    "multipleSelect": true,
+    "title": "Pourquoi vendez-vous des viennoiseries faites-maison ?",
+    "answers": [
+      {
+        "key": "A",
+        "label": "Question de principe : une boulangerie ne devrait pas vendre de viennoiseries industrielles"
+      },
+      {
+        "key": "B",
+        "label": "Question d'honneur: des industrielles ? Jamais !"
+      },
+      {
+        "key": "C",
+        "label": "Je prends du plaisir à produire des viennoiseries"
+      },
+      {
+        "key": "D",
+        "label": "Le client n’aime pas l'industrielle"
+      },
+      {
+        "key": "E",
+        "label": "Autre"
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "path": "AB",
+    "multipleSelect": true,
+    "title": "Combien de viennoiseries prenez-vous en moyenne ?",
+    "answers": [
+      {
+        "key": "A",
+        "label": "Très peu, très rarement"
+      },
+      {
+        "key": "B",
+        "label": "Une ou deux par mois"
+      },
+      {
+        "key": "C",
+        "label": "Une ou deux par semaine"
+      },
+      {
+        "key": "D",
+        "label": "Au moins trois ou quatre par semaine"
+      },
+      {
+        "key": "E",
+        "label": "Une par jour"
+      },
+      {
+        "key": "F",
+        "label": "Plusieurs par jour"
+      },
+      {
+        "key": "G",
+        "label": "Autre"
+      }
+    ]
+  }
+]

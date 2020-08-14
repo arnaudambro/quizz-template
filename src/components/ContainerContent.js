@@ -1,41 +1,36 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import media from '../styles/media';
 
 const ContainerContent = ({ onClick, onNext, onPrev, children, cta, tip, debug }) => {
   if (!Boolean(cta)) {
     return (
       <Container debug={debug}>
-        <Content debug={debug}>
-          {children}
-        </Content>
+        <Content debug={debug}>{children}</Content>
       </Container>
-    )
+    );
   }
   return (
     <>
       <Container debug={debug}>
-        <Content debug={debug}>
-          {children}
-          <CTAContainerDesktop>
-            <CTA type="button" onClick={onClick}>{cta}</CTA>
-            {tip && <Tip>{tip}</Tip>}
-          </CTAContainerDesktop>
-        </Content>
+        <Content debug={debug}>{children}</Content>
       </Container>
       <CTAContainerMobile>
-        <CTA type="button" onClick={onClick}>{cta}</CTA>
+        <CTA type="button" onClick={onClick}>
+          {cta}
+        </CTA>
         {tip && <Tip>{tip}</Tip>}
       </CTAContainerMobile>
     </>
-  )
-}
+  );
+};
 
 const color = '#c87517';
+const background = '#efcab0';
 const Container = styled.section`
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-  ${props => props.debug && 'border: 4px solid red;'}
+  ${(props) => props.debug && 'border: 4px solid red;'}
 `;
 
 const ctaHeight = 100;
@@ -49,16 +44,8 @@ const Content = styled.div`
   justify-content: center;
   ${media('max').mobile`justify-content: flex-start;`}
   align-items: center;
-  padding: 10%;
-  ${props => props.debug && 'border: 2px solid blue;'}
-`;
-
-const CTAContainerDesktop = styled.div`
-  ${media('max').mobile`display: none;`}
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin-top: 30px;
+  padding: 20% 10%;
+  ${(props) => props.debug && 'border: 2px solid blue;'}
 `;
 
 const CTAContainerMobile = styled.div`
@@ -66,11 +53,11 @@ const CTAContainerMobile = styled.div`
   bottom: 0;
   width: 100%;
   height: ${ctaHeight}px;
-  background: white;
+  background: ${background};
   display: flex;
   align-items: center;
   justify-content: space-around;
-  ${media('min').mobile`display: none;`}
+  ${media('min').mobile`justify-content: center;`}
 `;
 
 const CTA = styled.button`
