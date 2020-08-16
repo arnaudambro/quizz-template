@@ -7,20 +7,33 @@ import {
   AnswersContainer,
   AnswerKey,
   AnswerSubContainer,
+  Input,
+  Reset,
 } from '../styles/components';
 
+const Autre = 'Autre:';
 class QCM extends React.Component {
   state = {
     selected: [],
+    inputValue: '',
+    inputFocus: false,
   };
+
+  autreQuestion = this.props.answers.find((q) => q.label === Autre) || { key: 'A', label: Autre };
 
   componentDidMount() {
     if (this.props.visible) this.addKeyListener();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.visible && !this.props.visible) this.removeKeyListener();
     if (!prevProps.visible && this.props.visible) this.addKeyListener();
+    if (!prevState.inputFocus && this.state.inputFocus) this.removeKeyListener();
+    if (prevState.inputFocus && !this.state.inputFocus) this.addKeyListener();
+    if (this.state.inputValue.length && !this.state.selected.includes(this.autreQuestion.key))
+      this.handleToggle(this.autreQuestion.key);
+    if (!this.state.inputValue.length && this.state.selected.includes(this.autreQuestion.key))
+      this.handleToggle(this.autreQuestion.key);
   }
 
   componentWillUnmount() {
@@ -28,6 +41,7 @@ class QCM extends React.Component {
   }
 
   addKeyListener = () => {
+    if (!this.props.answers) return;
     window.addEventListener('keydown', this.handleShortcuts);
   };
 
@@ -35,13 +49,16 @@ class QCM extends React.Component {
     window.removeEventListener('keydown', this.handleShortcuts);
   };
 
-  handleShortcuts = (e) => this.handleToggle(e.key.toLowerCase());
+  handleShortcuts = (e) => this.handleToggle(e.key);
   handleSelect = (e) => this.handleToggle(e.target.value);
 
   handleToggle = (key) => {
     key = key.toLowerCase();
-    const { answers } = this.props;
-    const alphabet = answers.map(({ key }) => key.toLowerCase());
+    const { answers, onPrev } = this.props;
+    if (key === 'arrowdown') return this.onNext();
+    if (key === 'arrowup') return onPrev();
+    if (key === 'enter' && this.input.hasFocus()) return this.onNext();
+    const alphabet = answers.map(({ key }) => key);
     if (alphabet.indexOf(key) !== -1) {
       this.setState(({ selected }) => {
         if (selected.includes(key)) {
@@ -57,36 +74,100 @@ class QCM extends React.Component {
   };
 
   autoNext = () => {
-    const { answers, multipleSelect, setNewPath, onNext } = this.props;
+    this.sendAnswer();
+    const { answers, multipleSelect, setNewPath } = this.props;
     const { selected } = this.state;
     if (multipleSelect) return;
-    const answer = answers.find((a) => a.key.toLowerCase() === selected[0]);
+    const answer = answers.find((a) => a.key === selected[0]);
     if (answer.path) setNewPath(answer.path);
     setTimeout(() => {
-      onNext();
+      this.onNext();
     }, 750);
   };
 
+  sendAnswer = () => {
+    const { sendAnswer, answers, question, questionNumber } = this.props;
+    const { selected, inputValue } = this.state;
+    sendAnswer({
+      [`${questionNumber}. ${question}`]: selected.map((key) => {
+        if (answers) {
+          const answer = answers.find((a) => a.key === key);
+          if (answer.label === Autre) return `Autre: ${inputValue}`;
+          return answer.label;
+        }
+        return inputValue;
+      }),
+    });
+  };
+
+  onNext = this.props.onNext;
+
+  setInputValue = (e) => {
+    this.setState({ inputValue: e.target.value }, this.sendAnswer);
+  };
+
+  resetInput = (e) => {
+    e.stopPropagation();
+    this.setState(
+      ({ selected }) => ({
+        inputValue: '',
+        selected: selected.filter((key) => key !== this.autreQuestion.key),
+      }),
+      this.sendAnswer
+    );
+  };
+
   render() {
-    const { question, questionNumber, description, answers } = this.props;
-    const { selected } = this.state;
+    const { question, questionNumber, description, answers, visible } = this.props;
+    const { selected, inputValue } = this.state;
     return (
-      <ContainerContent>
+      <ContainerContent visible={visible}>
         <Title>
           {questionNumber}. {question}
         </Title>
         {description && <Description>{description}</Description>}
         <AnswersContainer>
-          {answers.map(({ key, label, path }, index) => {
-            return (
-              <AnswerSubContainer onClick={this.handleSelect} key={label} value={key}>
-                <AnswerContainer selected={selected.includes(key.toLowerCase())}>
-                  <AnswerKey>{key.toUpperCase()}</AnswerKey>
-                  {label}
-                </AnswerContainer>
-              </AnswerSubContainer>
-            );
-          })}
+          {answers ? (
+            answers.map(({ key, label, path }, index) => {
+              return (
+                <AnswerSubContainer onClick={this.handleSelect} key={label} value={key}>
+                  <AnswerContainer selected={selected.includes(key)}>
+                    <AnswerKey>{key.toUpperCase()}</AnswerKey>
+                    {label}
+                    {label === Autre && (
+                      <>
+                        <Input
+                          as="input"
+                          ref={(r) => (this.input = r)}
+                          type="text"
+                          placeholder="Cliquez ici pour répondre"
+                          value={inputValue}
+                          onChange={this.setInputValue}
+                          onFocus={() => this.setState({ inputFocus: true })}
+                          onBlur={() => this.setState({ inputFocus: false })}
+                        />
+                        {Boolean(inputValue.length) && <Reset onClick={this.resetInput} />}
+                      </>
+                    )}
+                  </AnswerContainer>
+                </AnswerSubContainer>
+              );
+            })
+          ) : (
+            <AnswerSubContainer as="div" noBorder>
+              <Input
+                as="input"
+                isAlone
+                ref={(r) => (this.input = r)}
+                type="text"
+                placeholder="Répondez ici"
+                value={inputValue}
+                onChange={this.setInputValue}
+                onFocus={() => this.setState({ inputFocus: true })}
+                onBlur={() => this.setState({ inputFocus: false })}
+              />
+            </AnswerSubContainer>
+          )}
         </AnswersContainer>
       </ContainerContent>
     );

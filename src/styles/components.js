@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import resetSvg from '../assets/pictures/Reset.svg';
 
 export const Title = styled.h1`
   font-size: 1.5em;
@@ -8,7 +9,7 @@ export const Title = styled.h1`
 `;
 
 export const Description = styled.p`
-  font-size: 1.5em;
+  font-size: ${(props) => (props.small ? 1 : 1.5)}em;
   text-align: center;
   color: #707070;
 `;
@@ -18,22 +19,22 @@ export const AnswersContainer = styled.div`
   flex-direction: column;
   width: 100%;
   max-width: min(600px, 80vw);
-  `;
+`;
 
-
-const color = '#812e16'
+const color = '#812e16';
 const selectedCss = css`
   border-color: ${color};
   background-color: ${color}66;
 `;
 
 export const AnswerSubContainer = styled.button`
-  border-radius: 4px;
-  border: 1px solid ${color};
+  ${(props) => (!props.noBorder ? 'border' : 'border-bottom')}: 1px solid ${color};
+  ${(props) => !props.noBorder && 'border-radius: 4px;'}
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px 0px;
   color: ${color};
   flex-shrink: 0;
   margin-bottom: 20px;
+  display: inline-flex;
   :hover {
     & > div {
       ${selectedCss}
@@ -44,25 +45,65 @@ export const AnswerSubContainer = styled.button`
   }
 `;
 
-
-export const AnswerContainer = styled.div`
+const answerCss = css`
   width: 100%;
-  background-color: ${color}33;
   border: 1px solid transparent;
-  border-radius: 4px;
   font-size: 1em;
   color: ${color};
   display: flex;
+  align-items: center;
+  ${(props) => props.selected && selectedCss}
+`;
+export const AnswerContainer = styled.div`
+  ${answerCss}
+  background-color: ${color}33;
+  border-radius: 4px;
   padding: 8px 18px;
+  text-align: left;
   &:hover {
     ${selectedCss}
   }
-  ${props => props.selected && selectedCss}
+`;
+
+export const Autre = styled.span`
+  background-color: ${color}33;
+  padding: 0 18px;
+  border-top-left-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+`;
+
+const inputAloneCss = css`
+  background-color: ${color}33;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding: 8px 18px;
+`;
+export const Input = styled.input`
+  ${answerCss}
+  pointer-events: auto;
+  background-color: transparent;
+  padding-left: 18px;
+  ::placeholder {
+    color: ${color}66;
+  }
+  ${(props) => props.isAlone && inputAloneCss}
+`;
+
+export const Reset = styled.div`
+  background: url(${resetSvg});
+  height: 15px;
+  width: 15px;
+  position: absolute;
+  right: 15px;
+  margin-top: auto;
+  margin-bottom: auto;
+  pointer-events: auto;
 `;
 
 export const AnswerKey = styled.span`
   border-radius: 4px;
-  background-color: #FFFFFF33;
+  background-color: #ffffff33;
   border: 1px solid ${color};
   color: ${color};
   padding: 0px 6px;
@@ -70,4 +111,5 @@ export const AnswerKey = styled.span`
   font-weight: 600;
   font-size: 0.8em;
   height: 100%;
+  text-align: left;
 `;

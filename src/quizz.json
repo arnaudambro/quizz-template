@@ -1,172 +1,353 @@
 [
   {
-    "number": 1,
     "path": "A",
     "multipleSelect": false,
     "title": "Êtes-vous un boulanger/pâtissier ou un consommateur\u00A0?",
     "answers": [
       {
-        "key": "A",
+        "key": "a",
         "label": "Un boulanger/pâtissier",
         "path": "AA"
       },
       {
-        "key": "B",
+        "key": "b",
         "label": "Un consommateur",
         "path": "AB"
       }
     ]
   },
   {
-    "number": 2,
     "path": "AA",
     "multipleSelect": false,
-    "title": "Vendez-vous des viennoiseries dans votre établissement ?",
+    "title": "Vendez-vous des viennoiseries dans votre établissement\u00A0?",
     "answers": [
       {
-        "key": "A",
+        "key": "a",
         "label": "Oui",
         "path": "AAA"
       },
       {
-        "key": "B",
+        "key": "b",
         "label": "Non",
         "path": "AAB"
       }
     ]
   },
   {
-    "number": 3,
     "path": "AAB",
     "multipleSelect": true,
-    "title": "Pourquoi ne vendez-vous pas de viennoiserie ?",
+    "title": "Pourquoi ne vendez-vous pas de viennoiserie\u00A0?",
     "answers": [
       {
-        "key": "A",
+        "key": "a",
         "label": "Je ne sais pas les faire, mais si je savais j'en vendrais"
       },
       {
-        "key": "B",
+        "key": "b",
         "label": "Ça prend trop de temps par rapport à ce que ça rapporte"
       },
       {
-        "key": "C",
+        "key": "c",
         "label": "Je ne veux pas en vendre, c'est tout."
       },
       {
-        "key": "D",
-        "label": "Autre"
+        "key": "d",
+        "label": "Autre:"
       }
     ]
   },
   {
-    "number": 3,
     "path": "AAA",
     "multipleSelect": false,
-    "title": "Vos viennoiseries sont-elles faites maison ou industrielles ?",
-    "description": "Dans les deux choix, je vous demanderai pourquoi ensuite : vous avez sûrement de bonnes raisons !",
+    "title": "Vos viennoiseries sont-elles faites maison ou industrielles\u00A0?",
+    "description": "Dans les deux choix, je vous demanderai pourquoi ensuite\u00A0?: vous avez sûrement de bonnes raisons\u00A0!",
     "answers": [
       {
-        "key": "A",
+        "key": "a",
         "label": "Industrielles",
         "path": "AAAA"
       },
       {
-        "key": "B",
+        "key": "b",
         "label": "Faites-maison",
         "path": "AAAB"
       }
     ]
   },
   {
-    "number": 4,
     "path": "AAAA",
     "multipleSelect": true,
-    "title": "Pourquoi vendez-vous des viennoiseries industrielles ?",
+    "title": "Pourquoi vendez-vous des viennoiseries industrielles\u00A0?",
     "answers": [
       {
-        "key": "A",
+        "key": "a",
         "label": "Le fait maison prend trop de temps par rapport à ce que ça rapporte"
       },
       {
-        "key": "B",
+        "key": "b",
         "label": "Je ne prends pas de plaisir à produire des viennoiseries"
       },
       {
-        "key": "C",
+        "key": "c",
         "label": "Je ne vois pas la différence entre la faite maison et l'industrielle"
       },
       {
-        "key": "D",
+        "key": "d",
         "label": "Le client ne voit pas la différence entre la faite maison et l'industrielle"
       },
       {
-        "key": "E",
-        "label": "Autre"
+        "key": "e",
+        "label": "Autre:"
       }
     ]
   },
   {
-    "number": 4,
     "path": "AAAB",
     "multipleSelect": true,
-    "title": "Pourquoi vendez-vous des viennoiseries faites-maison ?",
+    "title": "Pourquoi vendez-vous des viennoiseries faites-maison\u00A0?",
     "answers": [
       {
-        "key": "A",
-        "label": "Question de principe : une boulangerie ne devrait pas vendre de viennoiseries industrielles"
+        "key": "a",
+        "label": "Question de principe\u00A0?: une boulangerie ne devrait pas vendre de viennoiseries industrielles"
       },
       {
-        "key": "B",
-        "label": "Question d'honneur: des industrielles ? Jamais !"
+        "key": "b",
+        "label": "Question d'honneur\u00A0?: des industrielles\u00A0? Jamais\u00A0!"
       },
       {
-        "key": "C",
+        "key": "c",
         "label": "Je prends du plaisir à produire des viennoiseries"
       },
       {
-        "key": "D",
+        "key": "d",
         "label": "Le client n’aime pas l'industrielle"
       },
       {
-        "key": "E",
-        "label": "Autre"
+        "key": "e",
+        "label": "Autre:"
       }
     ]
   },
   {
-    "number": 3,
-    "path": "AB",
+    "path": "AAA",
+    "multipleSelect": false,
+    "title": "Combien vendez-vous vos croissants\u00A0?"
+  },
+  {
+    "path": "AAA",
+    "multipleSelect": false,
+    "title": "Combien vendez-vous vos pains au chocolat\u00A0?"
+  },
+  {
+    "path": "AAA",
     "multipleSelect": true,
-    "title": "Combien de viennoiseries prenez-vous en moyenne ?",
+    "title": "Êtes-vous satisfait du prix de vente par rapport au temps que vous passez à produire vos viennoiseries\u00A0?",
     "answers": [
       {
-        "key": "A",
+        "key": "a",
+        "label": "Oui, je m'y retrouve"
+      },
+      {
+        "key": "b",
+        "label": "Oui, c'est très rentable"
+      },
+      {
+        "key": "c",
+        "label": "Non, ça me prend trop de temps par rapport à ce que ça me rapporte"
+      },
+      {
+        "key": "d",
+        "label": "Autre:"
+      }
+    ]
+  },
+  {
+    "path": "AA",
+    "multipleSelect": true,
+    "title": "Aujourd'hui, le prix moyen d'un croissant ou d'un pain au chocolat est de 1€ à 1,5€, qu'ils soient industriels ou faits maison. En tant que boulanger/patissier, que penseriez-vous si le prix des faits maison était plutôt entre 2€ et 2,5€\u00A0?",
+    "answers": [
+      {
+        "key": "a",
+        "label": "Oui, ça ne serait que justice"
+      },
+      {
+        "key": "b",
+        "label": "Oui, un peu plus de marge sur les viennoiseries ça ne ferait pas de mal"
+      },
+      {
+        "key": "c",
+        "label": "Oui, ça motiverait les boulangers qui vendent des viennoiseries industrielles à les faire maison"
+      },
+      {
+        "key": "d",
+        "label": "Oui\u00A0! Et même 5€ si je pouvais\u00A0!"
+      },
+      {
+        "key": "e",
+        "label": "Non, je produit du fait-maison, et je suis satisfait avec le prix d'aujourd'hui, aucune raison de les vendre plus cher\u00A0!"
+      },
+      {
+        "key": "f",
+        "label": "Non, c'est trop cher par rapport à ce que ça me coûte, ça sera malhonnête pour le client"
+      },
+      {
+        "key": "g",
+        "label": "Non, les clients n'achèteraient plus parce que c'est trop cher"
+      },
+      {
+        "key": "h",
+        "label": "Non\u00A0! Et vous pensez aux pauvres gens qui n'auraient pas les moyens\u00A0? Non mais alors\u00A0!"
+      },
+      {
+        "key": "i",
+        "label": "Non, mes clients iraient dans la boulangerie d'à côté"
+      },
+      {
+        "key": "j",
+        "label": "Autre:"
+      }
+    ]
+  },
+
+  {
+    "path": "AB",
+    "multipleSelect": true,
+    "title": "Combien de viennoiseries prenez-vous en moyenne\u00A0?",
+    "answers": [
+      {
+        "key": "a",
         "label": "Très peu, très rarement"
       },
       {
-        "key": "B",
+        "key": "b",
         "label": "Une ou deux par mois"
       },
       {
-        "key": "C",
+        "key": "c",
         "label": "Une ou deux par semaine"
       },
       {
-        "key": "D",
+        "key": "d",
         "label": "Au moins trois ou quatre par semaine"
       },
       {
-        "key": "E",
+        "key": "e",
         "label": "Une par jour"
       },
       {
-        "key": "F",
+        "key": "f",
         "label": "Plusieurs par jour"
       },
       {
-        "key": "G",
-        "label": "Autre"
+        "key": "g",
+        "label": "Autre:"
+      }
+    ]
+  },
+  {
+    "path": "AB",
+    "multipleSelect": true,
+    "title": "Que pensez-vous que des viennoiseries vendues en boulangerie ne soient pas fabriquées sur place, mais en réalité soient faites en usine et seulement cuites ou réchauffées en boulangerie\u00A0?",
+    "answers": [
+      {
+        "key": "a",
+        "label": "C'est une honte. La viennoiserie en boulangerie, c'est artisanal ou rien\u00A0!"
+      },
+      {
+        "key": "b",
+        "label": "C'est un scandale. Et tout ça à l'insu de mon plein gré\u00A0!"
+      },
+      {
+        "key": "c",
+        "label": "C'est normal, ça doit prendre trop de temps de faire des viennoiseries par rapport au prix auquel elles sont vendues"
+      },
+      {
+        "key": "d",
+        "label": "Je m’en fiche, je ne vois pas la différence."
+      },
+      {
+        "key": "e",
+        "label": "Autre:"
+      }
+    ]
+  },
+
+  {
+    "path": "AB",
+    "multipleSelect": true,
+    "title": "Aujourd'hui, le prix moyen d'un croissant ou d'un pain au chocolat est de 1€ à 1,5€, qu'ils soient industriels ou faits maison. En tant que consommateur, que penseriez-vous si le prix des faits maison était plutôt entre 2€ et 2,5€\u00A0?",
+    "answers": [
+      {
+        "key": "a",
+        "label": "Oui, ça ne serait que justice pour les boulangers/pâtissiers"
+      },
+      {
+        "key": "b",
+        "label": "Oui, ça motiverait les boulangers qui vendent des viennoiseries industrielles à les faire maison"
+      },
+      {
+        "key": "c",
+        "label": "Oui\u00A0! Et même 5€ j'irai quand même\u00A0!"
+      },
+      {
+        "key": "d",
+        "label": "Non, je pense que c'est trop cher par rapport à ce que ça coûte, ça serait malhonnête"
+      },
+      {
+        "key": "e",
+        "label": "Non, je n'achèterais plus parce que c'est trop cher"
+      },
+      {
+        "key": "f",
+        "label": "Non\u00A0! Et vous pensez aux pauvres gens qui n'auraient pas les moyens\u00A0? Non mais alors\u00A0!"
+      },
+      {
+        "key": "g",
+        "label": "Non, j'irais dans la boulangerie d'à côté"
+      },
+      {
+        "key": "h",
+        "label": "Autre:"
+      }
+    ]
+  },
+  {
+    "path": "A",
+    "multipleSelect": true,
+    "title": "Que pensez-vous d'un \"label\" pour les viennoiseries faites maison\u00A0? Pas de jugement de qualité, seulement un label qui fournit au consommateur les origines des ingrédients et la certification fait-maison.",
+    "description": "Un label sérieux\u00A0?: on vient voir chaque établissement, on vérifie bien que c'est fait maison, et on fait régulièrement des visites surprises, etc.",
+    "answers": [
+      {
+        "key": "a",
+        "label": "Oui, c'est une bonne idée. Je serais prêt à n'acheter que dans les boulangeries qui en ont un."
+      },
+      {
+        "key": "b",
+        "label": "Oui, c'est une bonne idée. Mais ça serait juste du bonus, je ne changerais pas mes habitudes actuelles."
+      },
+      {
+        "key": "c",
+        "label": "Oui, c'est une bonne idée. Ça serait même bien d'étendre l'idée à d'autres produits artisanaux\u00A0!"
+      },
+      {
+        "key": "d",
+        "label": "Non, j'en ai marre des labels, ils mentent tous, pourquoi celui-là serait différent\u00A0?"
+      },
+      {
+        "key": "e",
+        "label": "Non, je m'en fiche de connaître tout ça. Tout ça pour une viennoiserie\u00A0!"
+      },
+      {
+        "key": "f",
+        "label": "Non, je m'en fiche des labels. Arrêtons le \"tout-contrôle\", nom d'une pipe\u00A0!"
+      },
+      {
+        "key": "g",
+        "label": "Non, la vie des boulangers/pâtissiers est bien assez compliquée comme ça, laissons-les respirer\u00A0!"
+      },
+      {
+        "key": "h",
+        "label": "Autre:"
       }
     ]
   }

@@ -1,18 +1,18 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import media from '../styles/media';
 
-const ContainerContent = ({ onClick, onNext, onPrev, children, cta, tip, debug }) => {
+const ContainerContent = ({ onClick, empty, children, cta, tip, debug, visible }) => {
   if (!Boolean(cta)) {
     return (
-      <Container debug={debug}>
+      <Container debug={debug} visible={visible}>
         <Content debug={debug}>{children}</Content>
       </Container>
     );
   }
   return (
     <>
-      <Container debug={debug}>
+      <Container debug={debug} visible>
         <Content debug={debug}>{children}</Content>
       </Container>
       <CTAContainerMobile>
@@ -27,24 +27,31 @@ const ContainerContent = ({ onClick, onNext, onPrev, children, cta, tip, debug }
 
 const color = '#c87517';
 const background = '#efcab0';
+const visibleCss = css`
+  transition: opacity 250ms ease-in-out 250ms;
+  opacity: 1;
+`;
 const Container = styled.section`
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
+  transition: opacity 250ms ease-in-out;
+  opacity: 0;
   ${(props) => props.debug && 'border: 4px solid red;'}
+  ${(props) => props.visible && visibleCss}
 `;
 
 const ctaHeight = 100;
 const Content = styled.div`
   width: 100%;
   height: 100%;
-  ${media('max').mobile`height: calc(100% - ${ctaHeight}px);`}
+  height: calc(100% - ${ctaHeight}px);
   overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   ${media('max').mobile`justify-content: flex-start;`}
   align-items: center;
-  padding: 20% 10%;
+  padding: 10%;
   ${(props) => props.debug && 'border: 2px solid blue;'}
 `;
 
@@ -60,7 +67,7 @@ const CTAContainerMobile = styled.div`
   ${media('min').mobile`justify-content: center;`}
 `;
 
-const CTA = styled.button`
+export const CTA = styled.button`
   border-radius: 4px;
   background-color: ${color};
   font-weight: bold;

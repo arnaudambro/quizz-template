@@ -4,13 +4,17 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import GlobalStyle from './styles/global';
 import bg from './assets/pictures/viennoiseries.jpg';
 import QCM from './screens/QCM';
-import quizz from './quizz.json';
+import quizzJson from './quizz.json';
+import ThanksScreen from './screens/ThanksScreen';
 
+const initPath = quizzJson[0].path;
 class App extends React.Component {
   state = {
     screen: 0,
-    path: quizz[0].path,
+    path: initPath,
+    quizz: quizzJson.filter((q) => initPath.startsWith(q.path)),
   };
+  answers = {};
 
   componentDidMount() {
     this.scrollToScreen(this.state.screen, 'auto');
@@ -25,35 +29,80 @@ class App extends React.Component {
 
   onStart = () => this.setState(({ screen }) => ({ screen: 1 }));
   onPrev = () => this.setState(({ screen }) => ({ screen: screen - 1 }));
-  onNext = () => this.setState(({ screen }) => ({ screen: screen + 1 }));
-  setNewPath = (path) => this.setState({ path });
+  onNext = () => {
+    const { quizz, screen } = this.state;
+    if (quizz.length === screen - 1) return;
+    this.setState(({ screen }) => ({ screen: screen + 1 }));
+  };
+  handleAnswer = (answer) => {
+    this.answers = Object.assign({}, this.answers, answer);
+  };
+  setNewPath = (path) =>
+    this.setState({ path, quizz: quizzJson.filter((q) => path.startsWith(q.path)) });
 
   scrollToScreen = (screen, behavior = 'smooth') => {
     const screenHeight = window.innerHeight;
     this.screener.scrollTo({ top: screenHeight * screen, behavior });
   };
 
+  onSend = async (person) => {
+    const sortedQuestions = Object.keys(this.answers).sort();
+    const text = `
+${sortedQuestions.map((question) => `${question}: ${this.answers[question].join('; ')}`).join('\n')}
+Nom: ${person.name}
+Email: ${person.email}
+Code postal: ${person.zip}
+Commentaires: ${person.comment}`;
+    console.log(text);
+    await fetch('https://api.tipimail.com/v1/messages/send', {
+      method: 'POST',
+      headers: {
+        'X-Tipimail-ApiUser': '1216dec5c2eb93965831abea2cf188a0',
+        'X-Tipimail-ApiKey': '6cb290b8ac5fd371026bb63830350665',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        apiKey: '6cb290b8ac5fd371026bb63830350665',
+        to: [
+          {
+            address: 'arnaud.ambroselli@yahoo.fr',
+          },
+        ],
+        msg: {
+          from: {
+            address: person.email || 'arnaud.ambroselli@yahoo.fr',
+            personalName: person.name || "Quelqu'un",
+          },
+          subject: `Quizz Viennoiseries: ${this.answers[sortedQuestions[0]]}`,
+          text: text,
+        },
+      }),
+    }).catch((err) => console.log('send feedback err', err));
+  };
+
   render() {
-    const { screen, path } = this.state;
+    const { screen, quizz } = this.state;
     return (
       <>
         <GlobalStyle />
         <Background />
-        <Screener ref={(r) => (this.screener = r)}>
-          <WelcomeScreen onStart={this.onStart} />
-          {quizz
-            .filter((q) => path.startsWith(q.path))
-            .map((question, index) => (
-              <QCM
-                visible={screen === index + 1}
-                questionNumber={question.number}
-                multipleSelect={question.multipleSelect}
-                question={question.title}
-                answers={question.answers}
-                setNewPath={this.setNewPath}
-                onNext={this.onNext}
-              />
-            ))}
+        <Screener ref={(r) => (this.screener = r)} screen={screen}>
+          <WelcomeScreen onStart={this.onStart} visible={screen === 0} />
+          {quizz.map((question, index) => (
+            <QCM
+              key={question.title}
+              visible={screen === index + 1}
+              questionNumber={index + 1}
+              multipleSelect={question.multipleSelect}
+              question={question.title}
+              answers={question.answers}
+              setNewPath={this.setNewPath}
+              sendAnswer={this.handleAnswer}
+              onNext={this.onNext}
+              onPrev={this.onPrev}
+            />
+          ))}
+          <ThanksScreen onSend={this.onSend} visible={screen === quizz.length + 1} />
         </Screener>
         <CTAContainerPrevNext visible={screen > 0}>
           <Ad>
@@ -99,6 +148,7 @@ const Screener = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: transform 250ms ease-in-out;
   > * {
     flex-shrink: 0;
     flex-grow: 0;
