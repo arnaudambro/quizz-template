@@ -20,7 +20,7 @@ class ThanksScreen extends React.Component {
   setInputValue = (e) => this.setState({ [e.target.name]: e.target.value });
   onSendRequest = () => {
     this.props.onSend(this.state);
-    this.setState({ disabled: true });
+    // this.setState({ disabled: true });
   };
   render() {
     const { visible } = this.props;
@@ -32,7 +32,7 @@ class ThanksScreen extends React.Component {
           Ce questionnaire est anonyme, néanmoins si vous ne voyez pas d'inconvénient à ce qu'on
           vous contacte pour avoir plus de renseignements, ou pour avoir votre avis sur le label que
           nous souhaitons créer, ou même si vous avez des remarques, veuillez remplir le formulaire
-          suivant (facultatif)
+          suivant <b>(facultatif)</b>
           <br />
           <br />
           <br />

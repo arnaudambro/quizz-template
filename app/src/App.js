@@ -8,11 +8,15 @@ import quizzJson from './quizz.json';
 import ThanksScreen from './screens/ThanksScreen';
 
 const initPath = quizzJson[0].path;
+const initQuizz = quizzJson.filter((q) => initPath.startsWith(q.path));
+const initScreen = 0;
+// const initScreen = initQuizz.length + 1;
 class App extends React.Component {
   state = {
-    screen: 0,
+    // screen: 0,
+    screen: initScreen,
     path: initPath,
-    quizz: quizzJson.filter((q) => initPath.startsWith(q.path)),
+    quizz: initQuizz,
   };
   answers = {};
 
@@ -46,38 +50,16 @@ class App extends React.Component {
   };
 
   onSend = async (person) => {
-    const sortedQuestions = Object.keys(this.answers).sort();
-    const text = `
-${sortedQuestions.map((question) => `${question}: ${this.answers[question].join('; ')}`).join('\n')}
-Nom: ${person.name}
-Email: ${person.email}
-Code postal: ${person.zip}
-Commentaires: ${person.comment}`;
-    console.log(text);
-    await fetch('https://api.tipimail.com/v1/messages/send', {
+    console.log(JSON.stringify(Object.assign({}, person, { quizz: this.answers })));
+    const response = await fetch('http://192.168.68.100:7777/viennoiseries/', {
       method: 'POST',
       headers: {
-        'X-Tipimail-ApiUser': '1216dec5c2eb93965831abea2cf188a0',
-        'X-Tipimail-ApiKey': '6cb290b8ac5fd371026bb63830350665',
         'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-      body: JSON.stringify({
-        apiKey: '6cb290b8ac5fd371026bb63830350665',
-        to: [
-          {
-            address: 'arnaud.ambroselli@yahoo.fr',
-          },
-        ],
-        msg: {
-          from: {
-            address: person.email || 'arnaud.ambroselli@yahoo.fr',
-            personalName: person.name || "Quelqu'un",
-          },
-          subject: `Quizz Viennoiseries: ${this.answers[sortedQuestions[0]]}`,
-          text: text,
-        },
-      }),
-    }).catch((err) => console.log('send feedback err', err));
+      body: JSON.stringify(Object.assign({}, person, { quizz: this.answers })),
+    });
+    console.log(response);
   };
 
   render() {

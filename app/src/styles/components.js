@@ -8,6 +8,14 @@ export const Title = styled.h1`
   margin-bottom: 50px;
 `;
 
+export const Multiple = styled.p`
+  margin-top: -50px;
+  margin-bottom: 50px;
+  font-size: 0.75em;
+  text-align: center;
+  color: #707070;
+`;
+
 export const Description = styled.p`
   font-size: ${(props) => (props.small ? 1 : 1.5)}em;
   text-align: center;

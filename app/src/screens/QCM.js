@@ -3,6 +3,7 @@ import ContainerContent from '../components/ContainerContent';
 import {
   Title,
   Description,
+  Multiple,
   AnswerContainer,
   AnswersContainer,
   AnswerKey,
@@ -19,7 +20,10 @@ class QCM extends React.Component {
     inputFocus: false,
   };
 
-  autreQuestion = this.props.answers.find((q) => q.label === Autre) || { key: 'A', label: Autre };
+  autreQuestion = (this.props.answers && this.props.answers.find((q) => q.label === Autre)) || {
+    key: 'A',
+    label: Autre,
+  };
 
   componentDidMount() {
     if (this.props.visible) this.addKeyListener();
@@ -28,6 +32,7 @@ class QCM extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.visible && !this.props.visible) this.removeKeyListener();
     if (!prevProps.visible && this.props.visible) this.addKeyListener();
+    console.log(prevState.inputFocus, this.state.inputFocus);
     if (!prevState.inputFocus && this.state.inputFocus) this.removeKeyListener();
     if (prevState.inputFocus && !this.state.inputFocus) this.addKeyListener();
     if (this.state.inputValue.length && !this.state.selected.includes(this.autreQuestion.key))
@@ -49,7 +54,9 @@ class QCM extends React.Component {
     window.removeEventListener('keydown', this.handleShortcuts);
   };
 
-  handleShortcuts = (e) => this.handleToggle(e.key);
+  handleShortcuts = (e) => {
+    this.handleToggle(e.key);
+  };
   handleSelect = (e) => this.handleToggle(e.target.value);
 
   handleToggle = (key) => {
@@ -57,7 +64,9 @@ class QCM extends React.Component {
     const { answers, onPrev } = this.props;
     if (key === 'arrowdown') return this.onNext();
     if (key === 'arrowup') return onPrev();
-    if (key === 'enter' && this.input.hasFocus()) return this.onNext();
+    if (key === 'enter') return this.onNext();
+    if (this.state.inputFocus) return;
+    if (!answers) return;
     const alphabet = answers.map(({ key }) => key);
     if (alphabet.indexOf(key) !== -1) {
       this.setState(({ selected }) => {
@@ -118,14 +127,15 @@ class QCM extends React.Component {
   };
 
   render() {
-    const { question, questionNumber, description, answers, visible } = this.props;
+    const { question, questionNumber, description, answers, visible, multipleSelect } = this.props;
     const { selected, inputValue } = this.state;
     return (
       <ContainerContent visible={visible}>
         <Title>
           {questionNumber}. {question}
         </Title>
-        {description && <Description>{description}</Description>}
+        {multipleSelect && <Multiple>Vous pouvez sélectionner plusieurs réponses</Multiple>}
+        {description && <Description small>{description}</Description>}
         <AnswersContainer>
           {answers ? (
             answers.map(({ key, label, path }, index) => {

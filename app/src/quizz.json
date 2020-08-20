@@ -60,7 +60,7 @@
     "path": "AAA",
     "multipleSelect": false,
     "title": "Vos viennoiseries sont-elles faites maison ou industrielles\u00A0?",
-    "description": "Dans les deux choix, je vous demanderai pourquoi ensuite\u00A0?: vous avez sûrement de bonnes raisons\u00A0!",
+    "description": "Dans les deux choix, je vous demanderai pourquoi ensuite\u00A0: vous avez sûrement de bonnes raisons\u00A0!",
     "answers": [
       {
         "key": "a",
@@ -108,11 +108,11 @@
     "answers": [
       {
         "key": "a",
-        "label": "Question de principe\u00A0?: une boulangerie ne devrait pas vendre de viennoiseries industrielles"
+        "label": "Question de principe\u00A0: une boulangerie ne devrait pas vendre de viennoiseries industrielles"
       },
       {
         "key": "b",
-        "label": "Question d'honneur\u00A0?: des industrielles\u00A0? Jamais\u00A0!"
+        "label": "Question d'honneur\u00A0: des industrielles\u00A0? Jamais\u00A0!"
       },
       {
         "key": "c",
@@ -315,7 +315,7 @@
     "path": "A",
     "multipleSelect": true,
     "title": "Que pensez-vous d'un \"label\" pour les viennoiseries faites maison\u00A0? Pas de jugement de qualité, seulement un label qui fournit au consommateur les origines des ingrédients et la certification fait-maison.",
-    "description": "Un label sérieux\u00A0?: on vient voir chaque établissement, on vérifie bien que c'est fait maison, et on fait régulièrement des visites surprises, etc.",
+    "description": "Un label sérieux\u00A0: on vient voir chaque établissement, on vérifie bien que c'est fait maison, et on fait régulièrement des visites surprises, etc.",
     "answers": [
       {
         "key": "a",
