@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import * as Sentry from '@sentry/react';
 import WelcomeScreen from './screens/WelcomeScreen';
 import GlobalStyle from './styles/global';
 import bg from './assets/pictures/viennoiseries.jpg';
@@ -50,8 +51,7 @@ class App extends React.Component {
   };
 
   onSend = async (person) => {
-    console.log(JSON.stringify(Object.assign({}, person, { quizz: this.answers })));
-    const response = await fetch('http://192.168.68.100:7777/viennoiseries/', {
+    const response = await fetch(process.env.REACT_APP_API, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +59,11 @@ class App extends React.Component {
       },
       body: JSON.stringify(Object.assign({}, person, { quizz: this.answers })),
     });
-    console.log(response);
+    if (response.ok) alert('Merci !');
+    if (!response.ok) {
+      alert("Erreur lors de l'envoi. Pouvez-vous réessayer ultérieurement ?");
+      Sentry.captureMessage(JSON.stringify(await response.json()));
+    }
   };
 
   render() {

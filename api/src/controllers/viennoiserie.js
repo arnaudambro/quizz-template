@@ -6,11 +6,11 @@ const ViennoiserieQuizzObject = require("../models/viennoiserie");
 const { sendFeedback } = require("./feedback");
 
 const formatQuizz = ({ name, email, zip, comment, quizz }) => {
-  console.log(typeof quizz, quizz);
+  quizz = typeof quizz === "string" ? JSON.parse(quizz) : quizz;
   return `
   ${Object.keys(quizz)
     .sort()
-    .map((question) => `${question}: ${quizz[question].join("; ")}`)
+    .map((question) => `${question}:\n      - ${quizz[question].join(";\n      - ")}`)
     .join("\n")}
     Nom: ${name}
     Email: ${email}
@@ -22,19 +22,19 @@ router.post(
   "/",
   catchErrors(async (req, res, next) => {
     const { body } = req;
-    console.log(body);
-    const exists = await ViennoiserieQuizzObject.findOne({ email: body.email });
-    if (exists) {
-      exists.name = body.name;
-      exists.comment = body.comment;
-      exists.email = body.email;
-      exists.zip = body.zip;
-      exists.quizz = body.quizz;
-      await exists.save();
+    if (body.email) {
+      const exists = await ViennoiserieQuizzObject.findOne({ email: body.email });
+      if (exists) {
+        exists.name = body.name;
+        exists.comment = body.comment;
+        exists.email = body.email;
+        exists.zip = body.zip;
+        exists.quizz = JSON.stringify(body.quizz);
+        await exists.save();
+      }
     } else {
       const newUser = body;
       newUser.quizz = JSON.stringify(body.quizz);
-      console.log("typeof newUser.quizz", typeof newUser.quizz);
       await ViennoiserieQuizzObject.create(newUser);
     }
 

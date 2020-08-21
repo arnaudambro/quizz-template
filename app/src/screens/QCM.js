@@ -32,7 +32,6 @@ class QCM extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.visible && !this.props.visible) this.removeKeyListener();
     if (!prevProps.visible && this.props.visible) this.addKeyListener();
-    console.log(prevState.inputFocus, this.state.inputFocus);
     if (!prevState.inputFocus && this.state.inputFocus) this.removeKeyListener();
     if (prevState.inputFocus && !this.state.inputFocus) this.addKeyListener();
     if (this.state.inputValue.length && !this.state.selected.includes(this.autreQuestion.key))
@@ -83,7 +82,6 @@ class QCM extends React.Component {
   };
 
   autoNext = () => {
-    this.sendAnswer();
     const { answers, multipleSelect, setNewPath } = this.props;
     const { selected } = this.state;
     if (multipleSelect) return;
@@ -95,21 +93,37 @@ class QCM extends React.Component {
   };
 
   sendAnswer = () => {
-    const { sendAnswer, answers, question, questionNumber } = this.props;
+    const {
+      sendAnswer,
+      setNewPath,
+      answers,
+      question,
+      questionNumber,
+      multipleSelect,
+    } = this.props;
     const { selected, inputValue } = this.state;
     sendAnswer({
-      [`${questionNumber}. ${question}`]: selected.map((key) => {
-        if (answers) {
-          const answer = answers.find((a) => a.key === key);
-          if (answer.label === Autre) return `Autre: ${inputValue}`;
-          return answer.label;
-        }
-        return inputValue;
-      }),
+      [`${questionNumber}. ${question}`]: Boolean(selected.length)
+        ? selected.map((key) => {
+            if (Boolean(answers)) {
+              const answer = answers.find((a) => a.key === key);
+              if (answer.label === Autre) return `Autre: ${inputValue}`;
+              return answer.label;
+            }
+            return inputValue;
+          })
+        : inputValue,
     });
+    if (multipleSelect) return;
+    if (!answers) return;
+    const answer = answers.find((a) => a.key === selected[0]);
+    if (answer && answer.path) setNewPath(answer.path);
   };
 
-  onNext = this.props.onNext;
+  onNext = () => {
+    this.sendAnswer();
+    this.props.onNext();
+  };
 
   setInputValue = (e) => {
     this.setState({ inputValue: e.target.value }, this.sendAnswer);
