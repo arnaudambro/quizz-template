@@ -59,8 +59,6 @@ class App extends React.Component {
       },
       body: JSON.stringify(Object.assign({}, person, { quizz: this.answers })),
     });
-    console.log(Object.assign({}, person, { quizz: this.answers }));
-    console.log(response);
     if (response.ok) alert('Merci !');
     if (!response.ok) {
       alert("Erreur lors de l'envoi. Pouvez-vous réessayer ultérieurement ?");
