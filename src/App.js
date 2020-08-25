@@ -59,6 +59,8 @@ class App extends React.Component {
       },
       body: JSON.stringify(Object.assign({}, person, { quizz: this.answers })),
     });
+    console.log(Object.assign({}, person, { quizz: this.answers }));
+    console.log(response);
     if (response.ok) alert('Merci !');
     if (!response.ok) {
       alert("Erreur lors de l'envoi. Pouvez-vous réessayer ultérieurement ?");
@@ -76,7 +78,8 @@ class App extends React.Component {
           <WelcomeScreen onStart={this.onStart} visible={screen === 0} />
           {quizz.map((question, index) => (
             <QCM
-              key={question.title}
+              key={`${question.title}${index}`}
+              description={question.description}
               visible={screen === index + 1}
               questionNumber={index + 1}
               multipleSelect={question.multipleSelect}

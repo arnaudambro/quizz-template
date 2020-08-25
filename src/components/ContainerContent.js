@@ -2,25 +2,28 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import media from '../styles/media';
 
-const ContainerContent = ({ onClick, empty, children, cta, tip, debug, visible }) => {
+const ContainerContent = ({ onClick, fullHeight, children, cta, tip, debug, visible }) => {
   if (!Boolean(cta)) {
     return (
       <Container debug={debug} visible={visible}>
-        <Content debug={debug}>{children}</Content>
+        <Content fullHeight={fullHeight} debug={debug}>
+          {children}
+        </Content>
       </Container>
     );
   }
+  console.log('visible', visible);
   return (
     <>
-      <Container debug={debug} visible>
+      <Container debug={debug} visible={visible}>
         <Content debug={debug}>{children}</Content>
       </Container>
-      <CTAContainerMobile>
+      <CTAContainer visible={visible}>
         <CTA type="button" onClick={onClick}>
           {cta}
         </CTA>
         {tip && <Tip>{tip}</Tip>}
-      </CTAContainerMobile>
+      </CTAContainer>
     </>
   );
 };
@@ -45,17 +48,18 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   height: calc(100% - ${ctaHeight}px);
+  ${(props) => props.fullHeight && 'height: 100%;'}
   overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   ${media('max').mobile`justify-content: flex-start;`}
   align-items: center;
-  padding: 10%;
+  padding: 5%;
   ${(props) => props.debug && 'border: 2px solid blue;'}
 `;
 
-const CTAContainerMobile = styled.div`
+const CTAContainer = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -64,7 +68,10 @@ const CTAContainerMobile = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  transition: opacity 125ms ease-in-out;
+  opacity: 0;
   ${media('min').mobile`justify-content: center;`}
+  ${(props) => props.visible && visibleCss}
 `;
 
 export const CTA = styled.button`
@@ -75,7 +82,12 @@ export const CTA = styled.button`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px 0px;
   color: white;
   padding: 8px 18px;
-  ${media('min').mobile`margin-right: 15px;`}
+  width: auto;
+  margin-right: 15px;
+  ${(props) => props.center && `margin-left: auto; margin-right: auto;`}
+  display: block;
+  min-height: 45px;
+  /* ${media('min').mobile`margin-right: 15px;`} */
 `;
 
 const Tip = styled.span`

@@ -19,11 +19,11 @@ class WelcomeScreen extends React.Component {
   }
 
   addKeyListener = () => {
-    window.addEventListener('keydown', this.handleShortcuts);
+    window.addEventListener('keyup', this.handleShortcuts);
   };
 
   removeKeyListener = () => {
-    window.removeEventListener('keydown', this.handleShortcuts);
+    window.removeEventListener('keyup', this.handleShortcuts);
   };
 
   handleShortcuts = (e) => {
@@ -32,9 +32,13 @@ class WelcomeScreen extends React.Component {
   };
 
   render() {
-    const { onStart } = this.props;
+    const { onStart, visible } = this.props;
     return (
-      <ContainerContent onClick={onStart} cta="J'ai faim !" tip="Appuyez sur Entrée ↵">
+      <ContainerContent
+        onClick={onStart}
+        cta="J'ai faim !"
+        tip="Appuyez sur Entrée ↵"
+        visible={visible}>
         <Iframe
           src="https://www.youtube.com/embed/ThViR9uVVts"
           frameborder="0"
@@ -42,7 +46,9 @@ class WelcomeScreen extends React.Component {
           allowFullScreen
           title="youpi"
         />
-        <Title>Des viennoiseries faites maison !?</Title>
+        <Title>
+          Des viennoiseries faites{'\u00A0'}maison{'\u00A0'}!?
+        </Title>
         <Description>
           Des pains au chocolat, j'en mange presque tous les jours, et c'est avec tristesse que j'ai
           appris en regardant cette vidéo que 80% des viennoiseries seraient d'origine industrielle.

@@ -30,14 +30,18 @@ class QCM extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.visible && !this.props.visible) this.removeKeyListener();
-    if (!prevProps.visible && this.props.visible) this.addKeyListener();
-    if (!prevState.inputFocus && this.state.inputFocus) this.removeKeyListener();
-    if (prevState.inputFocus && !this.state.inputFocus) this.addKeyListener();
-    if (this.state.inputValue.length && !this.state.selected.includes(this.autreQuestion.key))
+    if (prevProps.visible && !this.props.visible) {
+      this.removeKeyListener();
+    }
+    if (!prevProps.visible && this.props.visible) {
+      this.addKeyListener();
+    }
+    if (this.state.inputValue.length && !this.state.selected.includes(this.autreQuestion.key)) {
       this.handleToggle(this.autreQuestion.key);
-    if (!this.state.inputValue.length && this.state.selected.includes(this.autreQuestion.key))
+    }
+    if (!this.state.inputValue.length && this.state.selected.includes(this.autreQuestion.key)) {
       this.handleToggle(this.autreQuestion.key);
+    }
   }
 
   componentWillUnmount() {
@@ -45,25 +49,24 @@ class QCM extends React.Component {
   }
 
   addKeyListener = () => {
-    if (!this.props.answers) return;
-    window.addEventListener('keydown', this.handleShortcuts);
+    if (!this.props.answers) this.input.focus();
+    window.addEventListener('keyup', this.handleShortcuts);
   };
 
   removeKeyListener = () => {
-    window.removeEventListener('keydown', this.handleShortcuts);
+    window.removeEventListener('keyup', this.handleShortcuts);
   };
 
-  handleShortcuts = (e) => {
-    this.handleToggle(e.key);
-  };
+  handleShortcuts = (e) => this.handleToggle(e.key);
+
   handleSelect = (e) => this.handleToggle(e.target.value);
 
   handleToggle = (key) => {
     key = key.toLowerCase();
     const { answers, onPrev } = this.props;
-    if (key === 'arrowdown') return this.onNext();
+    if (key === 'arrowdown') return this.onNext('arrow down');
     if (key === 'arrowup') return onPrev();
-    if (key === 'enter') return this.onNext();
+    if (key === 'enter') return this.onNext('enter');
     if (this.state.inputFocus) return;
     if (!answers) return;
     const alphabet = answers.map(({ key }) => key);
@@ -88,7 +91,7 @@ class QCM extends React.Component {
     const answer = answers.find((a) => a.key === selected[0]);
     if (answer.path) setNewPath(answer.path);
     setTimeout(() => {
-      this.onNext();
+      this.onNext('auto');
     }, 750);
   };
 
@@ -120,7 +123,9 @@ class QCM extends React.Component {
     if (answer && answer.path) setNewPath(answer.path);
   };
 
-  onNext = () => {
+  onNext = (from) => {
+    console.log('on next', from);
+    if (this.state.inputFocus) this.input.blur();
     this.sendAnswer();
     this.props.onNext();
   };
