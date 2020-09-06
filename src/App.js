@@ -11,7 +11,10 @@ import ThanksScreen from './screens/ThanksScreen';
 const initPath = quizzJson[0].path;
 const initQuizz = quizzJson.filter((q) => initPath.startsWith(q.path));
 const initScreen = 0;
+// const initPath = quizzJson[quizzJson.length - 1].path;
+// const initQuizz = quizzJson.filter((q) => initPath.startsWith(q.path));
 // const initScreen = initQuizz.length + 1;
+
 class App extends React.Component {
   state = {
     // screen: 0,
@@ -59,10 +62,14 @@ class App extends React.Component {
       },
       body: JSON.stringify(Object.assign({}, person, { quizz: this.answers })),
     });
-    if (response.ok) alert('Merci !');
+    if (response.ok) {
+      alert('Merci !');
+      return true;
+    }
     if (!response.ok) {
       alert("Erreur lors de l'envoi. Pouvez-vous réessayer ultérieurement ?");
       Sentry.captureMessage(JSON.stringify(await response.json()));
+      return false;
     }
   };
 

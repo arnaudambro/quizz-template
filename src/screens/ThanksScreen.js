@@ -1,5 +1,6 @@
 import React from 'react';
 import ContainerContent, { CTA } from '../components/ContainerContent';
+import Loader from 'react-loaders';
 import {
   Title,
   Description,
@@ -15,16 +16,19 @@ class ThanksScreen extends React.Component {
     zip: '',
     comment: '',
     disabled: false,
+    sent: false,
   };
 
   setInputValue = (e) => this.setState({ [e.target.name]: e.target.value });
   onSendRequest = () => {
-    this.props.onSend(this.state);
-    // this.setState({ disabled: true });
+    this.setState({ disabled: true }, async () => {
+      const sent = await this.props.onSend(this.state);
+      this.setState({ sent });
+    });
   };
   render() {
     const { visible } = this.props;
-    const { name, email, zip, comment, disabled } = this.state;
+    const { name, email, zip, comment, disabled, sent } = this.state;
     return (
       <ContainerContent fullHeight visible={visible}>
         <Title>Merci !</Title>
@@ -90,8 +94,13 @@ class ThanksScreen extends React.Component {
             />
           </AnswerSubContainer>
           <div style={{ height: 30, flexShrink: 0 }} />
-          <CTA type="button" disabled={disabled} onClick={this.onSendRequest} center>
-            {disabled ? 'Envoyé !' : 'Envoyer'}
+          <CTA
+            type="button"
+            disabled={disabled || sent}
+            cursorDefault={disabled || sent}
+            onClick={this.onSendRequest}
+            center>
+            {disabled ? <Loader type="pacman" /> : sent ? 'Merci !' : 'Envoyer'}
           </CTA>
           <div style={{ height: 60, flexShrink: 0 }} />
         </AnswersContainer>

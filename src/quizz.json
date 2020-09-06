@@ -163,7 +163,7 @@
   },
   {
     "path": "AA",
-    "title": "Aujourd'hui, le prix moyen d'un croissant ou d'un pain au chocolat est de 1€ à 1,5€, qu'ils soient industriels ou faits maison. En tant que boulanger/pâtissier, que penseriez-vous si le prix des faits maison était plutôt entre 2€ et 2,5€\u00A0?",
+    "title": "Aujourd'hui, le prix moyen d'une viennoiserie, industrielle ou non, est de 1€ à 1,5€. En tant que boulanger/pâtissier, que penseriez-vous si les faits maison étaientt vendus entre 2€ et 2,5€\u00A0?",
     "answers": [
       {
         "key": "a",
@@ -244,7 +244,7 @@
 
   {
     "path": "AB",
-    "title": "Aujourd'hui, le prix moyen d'un croissant ou d'un pain au chocolat est de 1€ à 1,5€, qu'ils soient industriels ou faits maison. En tant que consommateur, que penseriez-vous si le prix des faits maison était plutôt entre 2€ et 2,5€\u00A0?",
+    "title": "Aujourd'hui, le prix moyen d'une viennoiserie, industrielle ou non, est de 1€ à 1,5€. Seriez-vous prêt à payer 2€ et 2,5€ pour une viennoiserie certifiée faite maison\u00A0?",
     "answers": [
       {
         "key": "a",
@@ -267,8 +267,8 @@
   },
   {
     "path": "A",
-    "title": "Que pensez-vous d'un \"label\" pour les viennoiseries faites maison, qui fournit au consommateur seulement les origines des ingrédients et la certification fait maison\u00A0?",
-    "description": "Pas de jugement sur la qualité gustative des produits, mais un label sérieux tout de même\u00A0: on vient voir chaque établissement, on vérifie bien que c'est fait maison, et on fait régulièrement des visites surprises, etc.",
+    "title": "Que pensez-vous d'un \"label\" pour les viennoiseries faites maison\u00A0?",
+    "description": "Pas de jugement sur la qualité gustative des produits - chacun son goût - mais un label certifiant l'origine des ingrédients et le \"fait\u00A0maison\"\u00A0.",
     "answers": [
       {
         "key": "a",

@@ -83,8 +83,10 @@ export const CTA = styled.button`
   color: white;
   padding: 8px 18px;
   width: auto;
+  min-width: 150px;
   margin-right: 15px;
   ${(props) => props.center && `margin-left: auto; margin-right: auto;`}
+  ${(props) => props.cursorDefault && 'cursor: default;'}
   display: block;
   min-height: 45px;
   /* ${media('min').mobile`margin-right: 15px;`} */
